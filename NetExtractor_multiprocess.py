@@ -119,7 +119,7 @@ def my_func(x):
             #Calculate Mututual information of all samples
             value = normalized_mutual_info_score(N[:, 0], N[:, 1])
             #Calculate mixture models. Specifiy the number of clusters: n_components
-            dpgmm = mixture.BayesianGaussianMixture(n_components=2, covariance_type='full', max_iter=100, ).fit(N)
+            dpgmm = mixture.BayesianGaussianMixture(n_components=5, covariance_type='full', max_iter=100, ).fit(N)
             Y_ = dpgmm.predict(N)
             unique, counts = np.unique(Y_, return_counts=True)
             S = metrics.silhouette_score(N, Y_)
@@ -128,7 +128,7 @@ def my_func(x):
             x_2 = []
             y_2 = []
             #Ensure enough samples fall into each cluster and have a minimum intercluster score
-            if len(counts) == 2 and counts[0] > 150 and counts[1] > 150 and S > 0.5:
+            if len(counts) == 2 and counts[0] > 30 and counts[1] > 30 and S > 0.5:
                 count_cluster_1 = 0
                 count_cluster_2 = 0
                 covar = dpgmm.covariances_
