@@ -23,4 +23,4 @@ The code is for multiprocess and runs on 20 threads. Modify based on resources a
 ### Important Notes:
 
 1) NetExtractor_output.txt will include unfiltered MI and S values. Thresholds are determined in postprocessing.
-2) Categorization of 5 clusters for module E was performed manually.
+
