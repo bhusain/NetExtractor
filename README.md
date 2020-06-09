@@ -18,7 +18,7 @@ python NetExtractor.py
 
 This code reads in the GEM (GTEx_v7_brain_subGEM-log-no.txt) and outputs a file (NetExtractor_output.txt) which contains GeneA_name, GeneB_name, MI value, Inter-cluster score value.
 
-The code is for multiprocess and runs on 20 threads. Modify based on resources available.
+The code is parallelized for multiprocesses and runs on 20 threads. Modify based on resources available.
 
 ### Important Notes:
 
