@@ -86,42 +86,17 @@ for i in range(0, 56200):
 def my_func(x):
     for j in index_list:
         if j > x:
-N = np.c_[data.ix[:, x], data.ix[:, j]]
+            N = np.c_[data.ix[:, x], data.ix[:, j]]
             #Calculate Mututual information of all samples
             value = normalized_mutual_info_score(N[:, 0], N[:, 1])
             #Calculate mixture models. Specifiy the number of clusters: n_components
-            dpgmm = mixture.BayesianGaussianMixture(n_components=5, covariance_type='full', max_iter=100, ).fit(N)
+            dpgmm = mixture.BayesianGaussianMixture(n_components=2, covariance_type='full', max_iter=100, ).fit(N)
             Y_ = dpgmm.predict(N)
             unique, counts = np.unique(Y_, return_counts=True)
             S = metrics.silhouette_score(N, Y_)
-            x_1 = []
-            y_1 = []
-            x_2 = []
-            y_2 = []
-            #Ensure enough samples fall into each cluster and have a minimum intercluster score
-            if len(counts) == 2 and counts[0] > 30 and counts[1] > 30 and S > 0.5:
-                count_cluster_1 = 0
-                count_cluster_2 = 0
-                covar = dpgmm.covariances_
-                mean = dpgmm.means_
-                v, w = linalg.eigh(covar[0])
-                v = 2. * np.sqrt(2.) * np.sqrt(v)
-                u = w[0] / linalg.norm(w[0])
-                angle = np.arctan(u[1] / u[0])
-                angle = 180. * angle / np.pi  # convert to degrees
-                cos_angle = np.cos(np.radians(180. + angle))
-                sin_angle = np.sin(np.radians(180. + angle))
-                xc = mean[1][0] - mean[0][0]
-                yc = mean[1][1] - mean[0][1]
-                xct = xc * cos_angle - yc * sin_angle
-                yct = xc * sin_angle + yc * cos_angle
-                rad_cc = (xct ** 2 / (v[0] / 2.) ** 2) + (yct ** 2 / (v[1] / 2.) ** 2)
-                #Ensure clusters are mutually separate using their mean and variance
-                if rad_cc > 1:
-                    #Write the edge, MI value, and intercluster score
-                    string_val = '%s,%s,%0.3f,%0.3f\n' % (str(data.columns.values[x]), str(data.columns.values[j]), value, S)
-                    f.write(string_val)
-                    f.flush()
+            string_val = '%s,%s,%0.3f,%0.3f\n' % (str(data.columns.values[x]), str(data.columns.values[j]), value, S)
+            f.write(string_val)
+            f.flush()
 
 
 #Calling multiprocessing function. Specify number of threads to launch the job.
