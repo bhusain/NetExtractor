@@ -1,6 +1,6 @@
 # NetExtractor
 
-![GitHub Logo](workflow1.png)
+![GitHub Logo](NetEx_workflow.png)
 
 ## USAGE:
 
